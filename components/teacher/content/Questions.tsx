@@ -24,7 +24,6 @@ const Questions: NextPage = () => {
   const [totalPagination, setTotalPagination] = useState<number>(0);
 
   useEffect(() => {
-    console.log(questionsbanksDummy);
     switch (view) {
       case "Bank":
         // fetch

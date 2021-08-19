@@ -28,7 +28,7 @@ const menusList = [
 
 const Layout: NextPage = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
-  const [selectedMenu, setSelectedMenu] = useState<String>("Questions");
+  const [selectedMenu, setSelectedMenu] = useState<String>("Quizzes");
 
   return (
     <div className="flex flex-col w-screen h-screen">

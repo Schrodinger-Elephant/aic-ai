@@ -12,7 +12,7 @@ const BackgroundImage = dynamic(() => import("components/BackgroundImage"), {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <div className="z-50 fixed top-0">
+      <div className="z-10 fixed top-0">
         <Component {...pageProps} />
       </div>
       <div className="z-0">
