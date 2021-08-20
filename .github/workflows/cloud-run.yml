@@ -36,12 +36,9 @@ jobs:
         service_account_key: ${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT }}
         service_account_email: ${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_EMAIL }}
 
-    - name: TEST
-      run: echo "$TEST"
-
     - name: Enable the necessary APIs and enable docker auth
       run: |- 
-        gcloud services enable containerregistry.googleapis.com --project=${{ env.CLOUD_RUN_PROJECT_ID }}
+        gcloud services enable containerregistry.googleapis.com --project="${{ env.CLOUD_RUN_PROJECT_ID }}"
         gcloud services enable run.googleapis.com
         gcloud --quiet auth configure-docker
 
