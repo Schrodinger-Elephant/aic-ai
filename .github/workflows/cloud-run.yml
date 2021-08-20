@@ -30,12 +30,14 @@ jobs:
         service_account_email: ${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_EMAIL }}
 
     - name: Enable the necessary APIs and enable docker auth
-      run: |-
+      run: |- 
+        gcloud config set project $CR_project_id
         gcloud services enable containerregistry.googleapis.com --project=$CR_project_id
         gcloud services enable run.googleapis.com
         gcloud --quiet auth configure-docker
       env:
-        CR_project_id: ${{ secrets.PROJECT_ID }}
+        CR_project_id: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
+
     - name: Build and tag image
       run: |-
         docker build . --tag "gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA"
