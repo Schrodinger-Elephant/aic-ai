@@ -34,8 +34,8 @@ jobs:
         gcloud services enable containerregistry.googleapis.com --project=${{ CR_project_id }}
         gcloud services enable run.googleapis.com
         gcloud --quiet auth configure-docker
-        with:
-          CR_project_id: ${{ secrets.PROJECT_ID }}
+      with:
+        CR_project_id: ${{ secrets.PROJECT_ID }}
     - name: Build and tag image
       run: |-
         docker build . --tag "gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA"
