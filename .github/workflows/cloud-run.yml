@@ -31,10 +31,10 @@ jobs:
 
     - name: Enable the necessary APIs and enable docker auth
       run: |-
-        gcloud services enable containerregistry.googleapis.com --project=${{ CR_project_id }}
+        gcloud services enable containerregistry.googleapis.com --project=$CR_project_id
         gcloud services enable run.googleapis.com
         gcloud --quiet auth configure-docker
-      with:
+      env:
         CR_project_id: ${{ secrets.PROJECT_ID }}
     - name: Build and tag image
       run: |-
