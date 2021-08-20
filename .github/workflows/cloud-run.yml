@@ -35,7 +35,7 @@ jobs:
 
     - name: Enable the necessary APIs and enable docker auth
       run: |- 
-        gcloud services enable containerregistry.googleapis.com --project=$CLOUD_RUN_PROJECT_ID
+        gcloud services enable containerregistry.googleapis.com --project=${{ env.CLOUD_RUN_PROJECT_ID }}
         gcloud services enable run.googleapis.com
         gcloud --quiet auth configure-docker
 
