@@ -3,12 +3,14 @@ from flask import Flask, render_template, url_for, request, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from model import pipeLine
+from model_indo import pipeLine_indo
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Data.db'
 db = SQLAlchemy(app)
 print("loading model")
 pipeline = pipeLine()
+pipeline_indo = pipeLine_indo()
 print("model loaded...")
 
 class Todo(db.Model):
@@ -59,6 +61,56 @@ def genpre():
         except:
             return 'There is an issue'
 
+@app.route('/pre', methods=['POST'])
+def pre():
+    if request.method == 'POST':
+        task_context = request.get_json()
+        context = task_context['context']
+        question = task_context['question']
+        answer = pipeline.predict_answer(context, question)
+
+        try:
+            return jsonify({'context': context, 'question': question, 'answer': answer}) 
+        except:
+            return 'There is an issue'
+
+@app.route('/genpreindo', methods=['POST'])
+def genpreindo():
+    if request.method == 'POST':
+        task_context = request.get_json()
+        task_context = task_context['context']
+        question = pipeline_indo.generate_question(task_context)
+        answer = pipeline_indo.predict_answer(task_context, question)
+
+        try:
+            return jsonify({'context': task_context, 'question': question, 'answer': answer}) 
+        except:
+            return 'There is an issue'
+
+@app.route('/preindo', methods=['POST'])
+def preindo():
+    if request.method == 'POST':
+        task_context = request.get_json()
+        context = task_context['context']
+        question = task_context['question']
+        answer = pipeline_indo.predict_answer(context, question)
+
+        try:
+            return jsonify({'context': context, 'question': question, 'answer': answer}) 
+        except:
+            return 'There is an issue'
+
+@app.route('/praseindo', methods=['POST'])
+def praseindo():
+    if request.method == 'POST':
+        task_context = request.get_json()
+        task_context = task_context['text']
+        possible_text = pipeline_indo.paraphrase(task_context)
+
+        try:
+            return jsonify({'possible_text': possible_text}) 
+        except:
+            return 'There is an issue'
 
 @app.route('/delete/<int:id>')
 def delete(id):
